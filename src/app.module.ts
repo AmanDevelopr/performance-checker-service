@@ -7,6 +7,8 @@ import configurations from './config/configuration';
 import { authMiddleware } from './libs/middleware/authMiddleware.service';
 import { AuthMiddlewareModule } from './libs/middleware/authMiddleware.module';
 import { AuthUsersModule, ProjectsModule } from './modules';
+import { ItemsModule } from './modules/items/items.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { AuthUsersModule, ProjectsModule } from './modules';
     AuthUsersModule,
     AuthMiddlewareModule,
     ProjectsModule,
+    ItemsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

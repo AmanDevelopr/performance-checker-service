@@ -1,15 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type ProjectsDocument = Projects & Document;
+export type ItemsDocument = Items & Document;
 
 @Schema()
-export class Projects {
+export class Items {
     @Prop()
     originalId: string;
     
     @Prop()
-    projectName: string;
+    item: string;
+
+    @Prop()
+    subCategory: string;
+
+    @Prop()
+    category: string;
 
     @Prop({
         required: true,
@@ -30,4 +36,4 @@ export class Projects {
     deletedAt: Date;
 }
 
-export const ProjectsSchema = SchemaFactory.createForClass(Projects);
+export const ItemsSchema = SchemaFactory.createForClass(Items);

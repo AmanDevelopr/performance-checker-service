@@ -37,40 +37,21 @@ export class ProjectsService {
     );
   }
   async create(
-    originalId: string,
     createProjectDto: CreateProjectDto): Promise<Projects> {
-    const data = await this.userService.findOne(originalId);
     const createData = {
-      userId: data.originalId,
-      title: createProjectDto.title,
-      description: createProjectDto.description,
-      techStack: createProjectDto.techStack,
+      ...createProjectDto,
     };
 
-    const check = await this.projectsModel.aggregate([
-      {
-        $match: {
-          userId: data.originalId,
-          deletedAt: undefined,
-          updatedAt: undefined,
-        },
-      },
-    ]);
+    const id = ProjectsService.createObjectId();
+    const dataCreate = {
+      originalId: id,
+      ...createData,
+    };
+    return await this.projectsModel.create(dataCreate);
 
-    if (!check || check.length == 0) {
-      const id = ProjectsService.createObjectId();
-      return await this.projectsModel.create({
-        originalId: id,
-        ...createData,
-      });
-    } else {
-      /* istanbul ignore next */
-      throw new NotFoundException('OOPS! User is already present');
-    }
   }
 
   async list(
-    id: string,
     page?: number,
     limit?: number,
   ): Promise<Projects[]> {
@@ -82,18 +63,18 @@ export class ProjectsService {
     }
     const skip = (page - 1) * limit;
     const list = await this.projectsModel
-      .find({ userId: id })
+      .find()
       .limit(limit)
       .skip(skip);
     if (!list || list.length === 0) {
-       /* istanbul ignore next */
+      /* istanbul ignore next */
       throw new NotFoundException('Could not find projects list');
     }
     return list;
   }
 
   async findOne(id: string): Promise<Projects> {
-    const single = await this.projectsModel.findById(id);
+    const single = await this.projectsModel.findOne({ originalId: id });
     if (!single) {
       throw new NotFoundException('OOPS! No data found, check service');
     }
@@ -110,25 +91,15 @@ export class ProjectsService {
       updatedAt: undefined,
     });
 
-    if (updateProjectDto.title) {
-      editedData.title = updateProjectDto.title;
-    }
-    if (updateProjectDto.description) {
-      editedData.description = updateProjectDto.description;
+    if (updateProjectDto.projectName) {
+      editedData.projectName = updateProjectDto.projectName;
     }
 
-    if (updateProjectDto.techStack) {
-      editedData.techStack = updateProjectDto.techStack;
-    }
     await this.softUpdate(id);
     const newData = {
       ...updateProjectDto,
       ...editedData,
       originalId: id,
-      userId: editedData.userId,
-      title: editedData.title,
-      description: editedData.description,
-      version: editedData.version + 1,
       updatedAt: undefined,
     };
     delete newData.updatedAt;
