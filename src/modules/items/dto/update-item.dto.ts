@@ -1,6 +1,7 @@
 import { PartialType, ApiProperty } from '@nestjs/swagger';
-import { CreateItemDto } from './create-item.dto';
 import { IsDefined, IsString } from 'class-validator';
+
+import { CreateItemDto } from './create-item.dto';
 
 export class UpdateItemDto extends PartialType(CreateItemDto) {
   @ApiProperty()

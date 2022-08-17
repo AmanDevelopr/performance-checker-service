@@ -13,12 +13,13 @@ import {
   Res,
   Query,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { SystemResponse } from 'response-handler';
+
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { JwtAuthGuard } from '../../common/guard/jwt-auth-gaurd';
-import { Request, Response } from 'express';
-import { SystemResponse } from 'response-handler';
 
 @Controller('category')
 export class CategoryController {

@@ -13,13 +13,14 @@ import {
   Res,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { SystemResponse } from 'response-handler';
+
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { JwtAuthGuard } from '../../common/guard/jwt-auth-gaurd';
-import { SystemResponse } from 'response-handler';
 
 @ApiTags('projects')
 @Controller('projects')
