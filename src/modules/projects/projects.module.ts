@@ -13,6 +13,6 @@ import { AuthUsersModule } from '../authUsers/authUsers.module';
     AuthUsersModule,
   ],
   controllers: [ProjectsController],
-  providers: [ProjectsService]
+  providers: [ProjectsService],
 })
 export class ProjectsModule {}

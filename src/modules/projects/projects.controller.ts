@@ -1,4 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, ValidationPipe, Req, Res, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  UseGuards,
+  ValidationPipe,
+  Req,
+  Res,
+  Query,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -15,25 +29,26 @@ export class ProjectsController {
   @Post()
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createProjectDto: CreateProjectDto,
-  @Req() req: Request,
-  @Res() res: Response,) {
+  async create(
+    @Body() createProjectDto: CreateProjectDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     const { logger } = res.locals;
     try {
-    const data= await this.projectsService.create( createProjectDto);
-    logger.info({
-      message: 'project is added successfully',
-      data: [],
-      option: [],
-    });
-    return res.send(
-      SystemResponse.success('project is added successfully!', data),
-    );
+      const data = await this.projectsService.create(createProjectDto);
+      logger.info({
+        message: 'project is added successfully',
+        data: [],
+        option: [],
+      });
+      return res.send(
+        SystemResponse.success('project is added successfully!', data),
+      );
+    } catch (err) {
+      return res.send(SystemResponse.internalServerError('Error', err.message));
+    }
   }
-  catch(err){
-    return res.send(SystemResponse.internalServerError('Error', err.message));
-  }
-}
 
   @Get('list')
   @UseGuards(JwtAuthGuard)
@@ -45,7 +60,7 @@ export class ProjectsController {
     const { logger } = res.locals;
     try {
       const data = await this.projectsService.list(page, limit);
-       /* istanbul ignore next */
+      /* istanbul ignore next */
       logger.info({
         message: 'Project details fetched successfully',
         data: [],
@@ -75,28 +90,28 @@ export class ProjectsController {
         option: [],
       });
       return res.send(
-        SystemResponse.success('single project fetched successfully', singleTodo),
+        SystemResponse.success(
+          'single project fetched successfully',
+          singleTodo,
+        ),
       );
     } catch (err) {
       return res.send(SystemResponse.internalServerError('Error', err.message));
     }
   }
 
-
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto,
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     const { logger } = res.locals;
 
     try {
-      const data = await this.projectsService.update(
-        id,
-        updateProjectDto,
-      );
+      const data = await this.projectsService.update(id, updateProjectDto);
       /* istanbul ignore next */
       logger.info({
         message: 'Project updated successfully',
@@ -110,7 +125,6 @@ export class ProjectsController {
       return res.send(SystemResponse.internalServerError('Error', err.message));
     }
   }
-
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)

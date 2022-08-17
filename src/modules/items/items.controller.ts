@@ -1,4 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UseGuards, Req, Res, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  UseGuards,
+  Req,
+  Res,
+  Query,
+} from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
@@ -13,25 +27,26 @@ export class ItemsController {
   @Post()
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createItemDto: CreateItemDto,
-  @Req() req: Request,
-  @Res() res: Response,) {
+  async create(
+    @Body() createItemDto: CreateItemDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
     const { logger } = res.locals;
     try {
-    const data= await this.itemsService.create( createItemDto);
-    logger.info({
-      message: 'item is added successfully',
-      data: [],
-      option: [],
-    });
-    return res.send(
-      SystemResponse.success('item is added successfully!', data),
-    );
+      const data = await this.itemsService.create(createItemDto);
+      logger.info({
+        message: 'item is added successfully',
+        data: [],
+        option: [],
+      });
+      return res.send(
+        SystemResponse.success('item is added successfully!', data),
+      );
+    } catch (err) {
+      return res.send(SystemResponse.internalServerError('Error', err.message));
+    }
   }
-  catch(err){
-    return res.send(SystemResponse.internalServerError('Error', err.message));
-  }
-}
 
   @Get('list')
   @UseGuards(JwtAuthGuard)
@@ -43,7 +58,7 @@ export class ItemsController {
     const { logger } = res.locals;
     try {
       const data = await this.itemsService.list(page, limit);
-       /* istanbul ignore next */
+      /* istanbul ignore next */
       logger.info({
         message: 'item details fetched successfully',
         data: [],
@@ -80,21 +95,18 @@ export class ItemsController {
     }
   }
 
-
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id') id: string, @Body() updateItemDto: UpdateItemDto,
+    @Param('id') id: string,
+    @Body() updateItemDto: UpdateItemDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     const { logger } = res.locals;
 
     try {
-      const data = await this.itemsService.update(
-        id,
-        updateItemDto,
-      );
+      const data = await this.itemsService.update(id, updateItemDto);
       /* istanbul ignore next */
       logger.info({
         message: 'item updated successfully',
@@ -108,7 +120,6 @@ export class ItemsController {
       return res.send(SystemResponse.internalServerError('Error', err.message));
     }
   }
-
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)

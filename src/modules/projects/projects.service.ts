@@ -13,7 +13,7 @@ export class ProjectsService {
     private readonly userService: AuthUsersService,
     @InjectModel(Projects.name)
     private readonly projectsModel: mongoose.Model<Projects>,
-  ) { }
+  ) {}
   public static createObjectId() {
     return String(new mongoose.Types.ObjectId());
   }
@@ -36,8 +36,7 @@ export class ProjectsService {
       { deletedAt: Date.now() },
     );
   }
-  async create(
-    createProjectDto: CreateProjectDto): Promise<Projects> {
+  async create(createProjectDto: CreateProjectDto): Promise<Projects> {
     const createData = {
       ...createProjectDto,
     };
@@ -48,13 +47,9 @@ export class ProjectsService {
       ...createData,
     };
     return await this.projectsModel.create(dataCreate);
-
   }
 
-  async list(
-    page?: number,
-    limit?: number,
-  ): Promise<Projects[]> {
+  async list(page?: number, limit?: number): Promise<Projects[]> {
     if (!page) {
       page = 1;
     }
@@ -62,10 +57,7 @@ export class ProjectsService {
       limit = 5;
     }
     const skip = (page - 1) * limit;
-    const list = await this.projectsModel
-      .find()
-      .limit(limit)
-      .skip(skip);
+    const list = await this.projectsModel.find().limit(limit).skip(skip);
     if (!list || list.length === 0) {
       /* istanbul ignore next */
       throw new NotFoundException('Could not find projects list');

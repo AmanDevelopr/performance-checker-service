@@ -5,29 +5,29 @@ export type ProjectsDocument = Projects & Document;
 
 @Schema()
 export class Projects {
-    @Prop()
-    originalId: string;
-    
-    @Prop()
-    projectName: string;
+  @Prop()
+  originalId: string;
 
-    @Prop({
-        required: true,
-        default: Date.now,
-    })
-    createdAt: Date;
+  @Prop()
+  projectName: string;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    updatedAt: Date;
+  @Prop({
+    required: true,
+    default: Date.now,
+  })
+  createdAt: Date;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    deletedAt: Date;
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  updatedAt: Date;
+
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  deletedAt: Date;
 }
 
 export const ProjectsSchema = SchemaFactory.createForClass(Projects);

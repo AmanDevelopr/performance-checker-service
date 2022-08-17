@@ -10,7 +10,7 @@ export class CategoryService {
   constructor(
     @InjectModel(Category.name)
     private readonly categoryModel: mongoose.Model<Category>,
-  ) { }
+  ) {}
   public static createObjectId() {
     return String(new mongoose.Types.ObjectId());
   }
@@ -34,8 +34,7 @@ export class CategoryService {
     );
   }
 
-  async create(
-    createCategoryDto: CreateCategoryDto): Promise<Category> {
+  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const createData = {
       ...createCategoryDto,
     };
@@ -46,13 +45,9 @@ export class CategoryService {
       ...createData,
     };
     return await this.categoryModel.create(dataCreate);
-
   }
- 
-  async list(
-    page?: number,
-    limit?: number,
-  ): Promise<Category[]> {
+
+  async list(page?: number, limit?: number): Promise<Category[]> {
     if (!page) {
       page = 1;
     }
@@ -60,10 +55,7 @@ export class CategoryService {
       limit = 5;
     }
     const skip = (page - 1) * limit;
-    const list = await this.categoryModel
-      .find()
-      .limit(limit)
-      .skip(skip);
+    const list = await this.categoryModel.find().limit(limit).skip(skip);
     if (!list || list.length === 0) {
       /* istanbul ignore next */
       throw new NotFoundException('Could not find category list');
@@ -97,7 +89,6 @@ export class CategoryService {
       editedData.parentId = updateCategoryDto.parentId;
     }
 
-
     await this.softUpdate(id);
     const newData = {
       ...updateCategoryDto,
@@ -116,5 +107,4 @@ export class CategoryService {
   async remove(id: string): Promise<Category> {
     return this.categoryModel.findByIdAndDelete(id);
   }
-
 }

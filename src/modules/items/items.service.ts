@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -10,14 +10,12 @@ export class ItemsService {
   constructor(
     @InjectModel(Items.name)
     private readonly itemsModel: mongoose.Model<Items>,
-  ) { }
+  ) {}
   public static createObjectId() {
     return String(new mongoose.Types.ObjectId());
   }
 
-  async softUpdate(
-    originalId: string,
-  ): Promise<mongoose.UpdateQuery<Items>> {
+  async softUpdate(originalId: string): Promise<mongoose.UpdateQuery<Items>> {
     const data = await this.itemsModel.updateOne(
       { originalId, updatedAt: undefined, deletedAt: undefined },
       { updatedAt: Date.now() },
@@ -25,16 +23,13 @@ export class ItemsService {
     return data;
   }
 
-  async softDelete(
-    originalId: string,
-  ): Promise<mongoose.UpdateQuery<Items>> {
+  async softDelete(originalId: string): Promise<mongoose.UpdateQuery<Items>> {
     return await this.itemsModel.updateOne(
       { originalId, updatedAt: undefined, deletedAt: undefined },
       { deletedAt: Date.now() },
     );
   }
-  async create(
-    createItemDto: CreateItemDto): Promise<Items> {
+  async create(createItemDto: CreateItemDto): Promise<Items> {
     const createData = {
       ...createItemDto,
     };
@@ -45,13 +40,9 @@ export class ItemsService {
       ...createData,
     };
     return await this.itemsModel.create(dataCreate);
-
   }
 
-  async list(
-    page?: number,
-    limit?: number,
-  ): Promise<Items[]> {
+  async list(page?: number, limit?: number): Promise<Items[]> {
     if (!page) {
       page = 1;
     }
@@ -59,10 +50,7 @@ export class ItemsService {
       limit = 5;
     }
     const skip = (page - 1) * limit;
-    const list = await this.itemsModel
-      .find()
-      .limit(limit)
-      .skip(skip);
+    const list = await this.itemsModel.find().limit(limit).skip(skip);
     if (!list || list.length === 0) {
       /* istanbul ignore next */
       throw new NotFoundException('Could not find items list');
@@ -78,10 +66,7 @@ export class ItemsService {
     return single;
   }
 
-  async update(
-    id: string,
-    updateItemDto: UpdateItemDto,
-  ): Promise<Items> {
+  async update(id: string, updateItemDto: UpdateItemDto): Promise<Items> {
     const editedData = await this.itemsModel.findOne({
       originalId: id,
       deletedAt: undefined,
@@ -119,5 +104,4 @@ export class ItemsService {
   async remove(id: string): Promise<Items> {
     return this.itemsModel.findByIdAndDelete(id);
   }
-
 }

@@ -5,32 +5,32 @@ export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
-    @Prop()
-    originalId: string;
-    
-    @Prop()
-    categoryName: string;
+  @Prop()
+  originalId: string;
 
-    @Prop()
-    parentId: number;
+  @Prop()
+  categoryName: string;
 
-    @Prop({
-        required: true,
-        default: Date.now,
-    })
-    createdAt: Date;
+  @Prop()
+  parentId: number;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    updatedAt: Date;
+  @Prop({
+    required: true,
+    default: Date.now,
+  })
+  createdAt: Date;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    deletedAt: Date;
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  updatedAt: Date;
+
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  deletedAt: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

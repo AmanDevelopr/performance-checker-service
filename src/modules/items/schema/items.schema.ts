@@ -5,35 +5,35 @@ export type ItemsDocument = Items & Document;
 
 @Schema()
 export class Items {
-    @Prop()
-    originalId: string;
-    
-    @Prop()
-    item: string;
+  @Prop()
+  originalId: string;
 
-    @Prop()
-    subCategory: string;
+  @Prop()
+  item: string;
 
-    @Prop()
-    category: string;
+  @Prop()
+  subCategory: string;
 
-    @Prop({
-        required: true,
-        default: Date.now,
-    })
-    createdAt: Date;
+  @Prop()
+  category: string;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    updatedAt: Date;
+  @Prop({
+    required: true,
+    default: Date.now,
+  })
+  createdAt: Date;
 
-    @Prop({
-        required: false,
-        default: undefined,
-    })
-    deletedAt: Date;
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  updatedAt: Date;
+
+  @Prop({
+    required: false,
+    default: undefined,
+  })
+  deletedAt: Date;
 }
 
 export const ItemsSchema = SchemaFactory.createForClass(Items);
