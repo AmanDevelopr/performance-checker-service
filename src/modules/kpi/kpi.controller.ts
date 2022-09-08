@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { SystemResponse } from 'response-handler';
+
 import { KpiService } from './kpi.service';
 import { CreateKpiDto } from './dto/create-kpi.dto';
 import { UpdateKpiDto } from './dto/update-kpi.dto';
@@ -54,7 +55,6 @@ export class KpiController {
     const { logger } = res.locals;
     try {
       const data = await this.kpiService.list(page, limit);
-      /* istanbul ignore next */
       logger.info({
         message: 'item details fetched successfully',
         data: [],
@@ -102,7 +102,6 @@ export class KpiController {
 
     try {
       const data = await this.kpiService.update(id, updateKpiDto);
-      /* istanbul ignore next */
       logger.info({
         message: 'item updated successfully',
         data: [],
@@ -125,7 +124,6 @@ export class KpiController {
     const { logger } = res.locals;
     try {
       const data = await this.kpiService.softDelete(id);
-      /* istanbul ignore next */
       logger.info({
         message: 'item deleted successfully',
         data: [],

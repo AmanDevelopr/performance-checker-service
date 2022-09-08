@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 import { KpiService } from './kpi.service';
 import { KpiController } from './kpi.controller';
-import { MongooseModule } from '@nestjs/mongoose';
 import { KpiSchema, Kpi } from './schema/kpi.schema';
 
 @Module({
@@ -9,6 +10,7 @@ import { KpiSchema, Kpi } from './schema/kpi.schema';
     MongooseModule.forFeature([{ name: Kpi.name, schema: KpiSchema }]),
   ],
   controllers: [KpiController],
-  providers: [KpiService]
+  providers: [KpiService],
+  exports: [KpiService]
 })
 export class KpiModule {}
