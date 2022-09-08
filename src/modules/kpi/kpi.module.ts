@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 import { KpiService } from './kpi.service';
 import { KpiController } from './kpi.controller';
-import { MongooseModule } from '@nestjs/mongoose';
 import { KpiSchema, Kpi } from './schema/kpi.schema';
 
 @Module({

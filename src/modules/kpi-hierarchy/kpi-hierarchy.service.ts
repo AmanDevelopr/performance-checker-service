@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+
 import { KpiService } from '../kpi/kpi.service';
 import { Kpi } from '../kpi/schema/kpi.schema';
 import { CreateKpiHierarchyDto } from './dto/create-kpi-hierarchy.dto';
@@ -81,7 +82,6 @@ export class KpiHierarchyService {
       .limit(limit)
       .skip(skip);
     if (!list || list.length === 0) {
-      /* istanbul ignore next */
       throw new NotFoundException('Could not find items list');
     }
     return list;
