@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsString } from 'class-validator';
 
-export class CreateProjectDto {
+export class CreateKpiDto {
   @ApiProperty()
   @IsDefined()
   @IsString()
-  projectName: string;
+  name: string;
 }
