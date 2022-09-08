@@ -4,12 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configurations from './config/configuration';
-import { KpiModule } from './modules/index'
+import { KpiModule, KpiHierarchyModule } from './modules/index';
 
 @Module({
   imports: [
     MongooseModule.forRoot(configurations.mongo),
     KpiModule,
+    KpiHierarchyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

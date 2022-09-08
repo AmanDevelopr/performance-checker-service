@@ -9,6 +9,7 @@ import { KpiSchema, Kpi } from './schema/kpi.schema';
     MongooseModule.forFeature([{ name: Kpi.name, schema: KpiSchema }]),
   ],
   controllers: [KpiController],
-  providers: [KpiService]
+  providers: [KpiService],
+  exports: [KpiService]
 })
 export class KpiModule {}
